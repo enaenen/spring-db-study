@@ -31,7 +31,7 @@ public class ItemRepositoryV0 {
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, item.getCode());
+			pstmt.setString(1, item.getName());
 			pstmt.setInt(2, item.getPrice());
 			pstmt.setInt(3, item.getStock());
 			pstmt.executeUpdate();
