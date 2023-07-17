@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  projectx:
+    container_name: projectx-db
+    build: ./
+    restart: always
+    environment:
+      MARIADB_DATABASE_HOST: ${HOST}
+      MARIADB_DATABASE: ${DATABASE}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${ROOT_PASSWORD}
+    ports:
+      - '3333:3306'
+    tty: true
