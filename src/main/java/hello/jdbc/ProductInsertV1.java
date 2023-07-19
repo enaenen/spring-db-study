@@ -1,21 +1,11 @@
 package hello.jdbc;
 
 import hello.jdbc.domain.Item;
-import hello.jdbc.service.ItemService;
 
-import java.util.Scanner;
+import static hello.jdbc.Main.*;
 
-public class ProductInsert {
-    private static final String TERMINATE_COMMAND = "exit";
-    private static final Scanner scanner = new Scanner(System.in);
-    private static String command = "";
-    private static final ItemService itemService = new ItemService();
-
-    enum Status {
-        NAME, PRICE, STOCK, EXIT
-    }
-
-    private static void insertItem() {
+public class ProductInsertV1 {
+    public Status insertItem() {
         int price = 0;
         int stock = 0;
 
@@ -33,8 +23,8 @@ public class ProductInsert {
                     if (command.equals(TERMINATE_COMMAND)) {
                         if (isSureExit()) {
                             currentStatus = Status.EXIT;
+                            return currentStatus;
                         }
-                        break;
                     }
                     if (command == null || command.isEmpty()) {
                         System.out.println("상품명이 입력되지 않았습니다.");
@@ -51,6 +41,7 @@ public class ProductInsert {
                         if (command.equals(TERMINATE_COMMAND)) {
                             if (isSureExit()) {
                                 currentStatus = Status.EXIT;
+                                return currentStatus;
                             }
                         }
                         System.out.println("상품 가격이 잘못 입력되었습니다.");
@@ -70,6 +61,7 @@ public class ProductInsert {
                         if (command.equals(TERMINATE_COMMAND)) {
                             if (isSureExit()) {
                                 currentStatus = Status.EXIT;
+                                return currentStatus;
                             }
                             break;
                         }
@@ -85,29 +77,12 @@ public class ProductInsert {
                     newItem = new Item(name, price, stock);
                     Item savedItem = itemService.saveItem(newItem);
                     System.out.println("saved item info : " + savedItem);
+                    return Status.MENU;
                 case EXIT:
                     break;
             }
 
         }
-
-
-    }
-
-
-    public static void main(String[] args) {
-        System.out.println("상품 등록 시스템");
-        System.out.println("종료를 뭔하시면 exit 을 입력해주세요.");
-
-        insertItem();
-
-        System.out.println("프로그램 종료");
-        scanner.close();
-    }
-
-    private static boolean isSureExit() {
-        System.out.println("종료하시겠습니까? Y / N");
-        String answer = scanner.next().toLowerCase();
-        return answer.equals("y") || answer.equals("yes") ? true : false;
+        return Status.EXIT;
     }
 }

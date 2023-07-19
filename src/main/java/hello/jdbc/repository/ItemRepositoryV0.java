@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.NoSuchElementException;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -41,6 +43,37 @@ public class ItemRepositoryV0 {
 			throw new RuntimeException(e);
 		} finally {
 			close(con, pstmt, null);
+		}
+	}
+
+	public Item findByName(String itemName) throws SQLException {
+		String sql = "select * from item where name = ?";
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, itemName);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Item item = new Item();
+				item.setCode(rs.getInt("code"));
+				item.setName(rs.getString("name"));
+				item.setPrice(rs.getInt("price"));
+				item.setStock(rs.getInt("code"));
+				return item;
+			} else {
+				throw new NoSuchElementException("Item not found itemName = " + itemName);
+			}
+		} catch (SQLException e) {
+			log.error("db error", e);
+			throw e;
+		} finally {
+			close(con, pstmt, rs);
 		}
 	}
 
