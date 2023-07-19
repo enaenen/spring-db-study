@@ -1,8 +1,5 @@
 package hello.jdbc.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import hello.jdbc.domain.Item;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
