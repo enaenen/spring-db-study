@@ -1,6 +1,5 @@
 package hello.jdbc;
 
-import hello.jdbc.domain.Item;
 import hello.jdbc.service.ItemService;
 
 import java.util.Scanner;
@@ -8,6 +7,9 @@ import java.util.Scanner;
 public class Main {
     public static final ProductInsertV1 productInsert = new ProductInsertV1();
     public static final ProductSearch productSearch = new ProductSearch();
+    public static final ProductDelete productDelete = new ProductDelete();
+    public static final OrderInsertAndProductUpdate orderInsertAndProductUpdate = new OrderInsertAndProductUpdate();
+
     public static final ItemService itemService = new ItemService();
     public static final Scanner scanner = new Scanner(System.in);
     public static final String TERMINATE_COMMAND = "exit";
@@ -16,20 +18,30 @@ public class Main {
     public static void main(String[] args) {
         Status status = Status.MENU;
 
-        while (status == Status.MENU) {
-            System.out.println("|   A [(ADD)상품 등록]  |   S [(SEARCH)상품 조회]   |   D [(DELETE)상품 제거]   |   U [(UPDATE)상품 수정]   |   E [(EXIT)프로그램 종료]   |");
-            command = scanner.next().toLowerCase();
-            switch (command.charAt(0)) {
-                case 'a':
+        while (status != Status.EXIT) {
+            if(status == Status.MENU) {
+                System.out.println(
+                        "|   A [(ADD)상품 등록]  |  S [(SEARCH)상품 검색]   |   O [(ORDER)상품 주문]   |   D [(DELETE)상품 제거]   |   E [(EXIT)프로그램 종료]   |");
+                command = scanner.next().toLowerCase();
+                status = getStatus();
+            }
+
+            switch (status) {
+                case ADDNAME:
+                case ADDPRICE:
+                case ADDSTOCK:
                     status = productInsert.insertItem();
                     break;
-                case 's':
-                    status = productSearch.ItemSearch();
+                case SEARCH:
+                    status = productSearch.itemSearch();
                     break;
-                case 'd':
-                case 'u':
-                case 'e':
-                    status = Status.EXIT;
+                case DELETE:
+                    status = productDelete.itemDelete();
+                    break;
+                case ORDER:
+                    status = orderInsertAndProductUpdate.orderProcess();
+                    break;
+                case EXIT:
                     break;
             }
             if (status.equals(Status.EXIT)) {
@@ -43,6 +55,32 @@ public class Main {
         }
         System.out.println("============================ 프로그램을 종료합니다. ============================");
             scanner.close();
+    }
+
+    private static Status getStatus() {
+        Status status;
+        switch (command.toLowerCase()) {
+            case "a":
+                status = Status.ADDNAME;
+                break;
+            case "s":
+                status = Status.SEARCH;
+                break;
+            case "d":
+                status = Status.DELETE;
+                break;
+            case "o":
+                status = Status.ORDER;
+                break;
+            case "e":
+                status = Status.EXIT;
+                break;
+            default:
+                System.out.println("잘못된 입력입니다.");
+                status = Status.MENU;
+                break;
+        }
+        return status;
     }
 
     public static boolean isSureExit() {

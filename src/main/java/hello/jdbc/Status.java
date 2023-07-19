@@ -1,6 +1,6 @@
 package hello.jdbc;
 
 public enum Status {
-        MENU, NAME, PRICE, STOCK, EXIT
+	MENU, ADDNAME, ADDPRICE, ADDSTOCK, SEARCH, DELETE, ORDER, EXIT
 
 }

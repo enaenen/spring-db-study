@@ -31,18 +31,10 @@ public class Item {
 		item.isValid();
 		return item;
 	}
-
-	private Item(int code, String name, int price, int stock) {
-		this.code = code;
-		this.name = name;
-		this.price = price;
-		this.stock = stock;
-	}
-
-	private Item(String name, int price, int stock) {
-		this.name = name;
-		this.price = price;
-		this.stock = stock;
+	public void orderItem(int amount){
+		if (stock < amount)
+			throw new DomainException(ExceptionStatus.PRODUCT_AMOUNT_NOT_ENOUGH);
+		stock -= amount;
 	}
 	public String toString(){
 		return String.format("상품코드: %d,\n상품명: %s\n상품가격: %d\n상품재고: %d\n", code, name, price, stock);

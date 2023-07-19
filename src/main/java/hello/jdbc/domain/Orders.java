@@ -8,12 +8,17 @@ public class Orders {
 	private int itemCode;
 	private int amount;
 
-	public Orders() {
+	private Orders() {
 	}
 
-	public Orders(int id, int itemCode, int amount) {
-		this.id = id;
+	private Orders(int itemCode, int amount) {
+
 		this.itemCode = itemCode;
 		this.amount = amount;
 	}
+	public static Orders of(int itemCode, int amount) {
+		return new Orders(itemCode, amount);
+	}
+
+
 }

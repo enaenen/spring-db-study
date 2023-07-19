@@ -11,7 +11,7 @@ public class ProductInsertV1 {
         int price = 0;
         int stock = 0;
 
-        Status currentStatus = Status.NAME;
+        Status currentStatus = Status.ADDNAME;
         String name = null;
 
         Item newItem;
@@ -19,8 +19,8 @@ public class ProductInsertV1 {
         System.out.println("상품 등록을 시작합니다.");
         while (currentStatus != Status.MENU) {
             switch (currentStatus) {
-                case NAME:
-                    System.out.println("[등록] 상품명을 입력해주세요.");
+                case ADDNAME:
+                    System.out.print("[등록] 상품명을 입력해주세요: ");
                     command = scanner.next();
                     if (command.equals(TERMINATE_COMMAND)) {
                         if (isSureExit()) {
@@ -30,9 +30,9 @@ public class ProductInsertV1 {
                         break;
                     }
                     name = command;
-                    currentStatus = Status.PRICE;
-                case PRICE:
-                    System.out.println("[등록] 상품 가격을 입력해주세요.");
+                    currentStatus = Status.ADDPRICE;
+                case ADDPRICE:
+                    System.out.print("[등록] 상품 가격을 입력해주세요: ");
                     command = scanner.next();
                     try {
                         price = Integer.parseInt(command);
@@ -43,12 +43,12 @@ public class ProductInsertV1 {
                                 return currentStatus;
                             }
                         }
-                        System.out.println("상품 가격이 잘못 입력되었습니다.");
+                        System.out.println("상품 가격이 잘못 입력되었습니다: ");
                         break;
                     }
-                    currentStatus = Status.STOCK;
-                case STOCK:
-                    System.out.println("[등록] 상품 재고수량을 입력해주세요.");
+                    currentStatus = Status.ADDSTOCK;
+                case ADDSTOCK:
+                    System.out.print("[등록] 상품 재고수량을 입력해주세요: ");
                     command = scanner.next();
                     try {
                         stock = Integer.parseInt(command);
@@ -71,13 +71,13 @@ public class ProductInsertV1 {
                     } catch (DomainException e) {
                         if (e.getStatus().equals(ExceptionStatus.PRODUCT_NAME_INVALID)) {
                             System.out.println("[상품 이름이 잘못되었습니다.]");
-                            currentStatus = Status.NAME;
+                            currentStatus = Status.ADDNAME;
                         } else if (e.getStatus().equals(ExceptionStatus.PRODUCT_PRICE_INVALID)) {
                             System.out.println("[상품 가격가 잘못되었습니다.]");
-                            currentStatus = Status.PRICE;
+                            currentStatus = Status.ADDPRICE;
                         } else {
                             System.out.println("[상품 재고가 잘못되었습니다.]");
-                            currentStatus = Status.STOCK;
+                            currentStatus = Status.ADDSTOCK;
                         }
                     }
                 case MENU:

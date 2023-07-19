@@ -1,14 +1,11 @@
 package hello.jdbc.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import hello.jdbc.domain.Item;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
-class ItemRepositoryV0Test {
+class ItemRepositoryTest {
 
-	ItemRepositoryV0 repository = new ItemRepositoryV0();
+	ItemRepository repository = new ItemRepository();
 
 	@Test
 	void crud() throws SQLException {
