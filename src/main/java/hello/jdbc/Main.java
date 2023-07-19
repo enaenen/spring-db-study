@@ -16,22 +16,29 @@ public class Main {
     public static void main(String[] args) {
         Status status = Status.MENU;
 
-        while (status != Status.EXIT) {
-            System.out.println("|   A [(ADD)상품 등록]  |   s [(SEARCH)상품 조회]   |   d [(DELETE)상품 제거]   |   u [(UPDATE)상품 수정]   |");
+        while (status == Status.MENU) {
+            System.out.println("|   A [(ADD)상품 등록]  |   S [(SEARCH)상품 조회]   |   D [(DELETE)상품 제거]   |   U [(UPDATE)상품 수정]   |   E [(EXIT)프로그램 종료]   |");
             command = scanner.next().toLowerCase();
             switch (command.charAt(0)) {
                 case 'a':
                     status = productInsert.insertItem();
                     break;
                 case 's':
-
-
+                    status = productSearch.ItemSearch();
+                    break;
                 case 'd':
                 case 'u':
-                default:
-                    if (isSureExit())
-                        status = Status.EXIT;
+                case 'e':
+                    status = Status.EXIT;
                     break;
+            }
+            if (status.equals(Status.EXIT)) {
+                if (isSureExit()) {
+                    break;
+                }
+                else {
+                    status = Status.MENU;
+                }
             }
         }
         System.out.println("============================ 프로그램을 종료합니다. ============================");

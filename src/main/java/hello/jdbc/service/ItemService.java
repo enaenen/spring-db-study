@@ -2,6 +2,7 @@ package hello.jdbc.service;
 
 import hello.jdbc.domain.Item;
 import hello.jdbc.repository.ItemRepositoryV0;
+import java.util.NoSuchElementException;
 import org.springframework.util.StringUtils;
 
 import java.sql.SQLException;
@@ -24,6 +25,8 @@ public class ItemService {
                 return itemRepositoryV0.findByName(itemName);
             else
                 return null;
+        }catch (NoSuchElementException e){
+            return null;
         } catch (SQLException e) {
             System.out.println("error = " + e);
             return null;

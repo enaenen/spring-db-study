@@ -17,14 +17,14 @@ public class ProductInsertV1 {
         Item newItem;
 
         System.out.println("상품 등록을 시작합니다.");
-        while (currentStatus != Status.EXIT) {
+        while (currentStatus != Status.MENU) {
             switch (currentStatus) {
                 case NAME:
                     System.out.println("[등록] 상품명을 입력해주세요.");
                     command = scanner.next();
                     if (command.equals(TERMINATE_COMMAND)) {
                         if (isSureExit()) {
-                            currentStatus = Status.EXIT;
+                            currentStatus = Status.MENU;
                             return currentStatus;
                         }
                         break;
@@ -39,7 +39,7 @@ public class ProductInsertV1 {
                     } catch (NumberFormatException e) {
                         if (command.equals(TERMINATE_COMMAND)) {
                             if (isSureExit()) {
-                                currentStatus = Status.EXIT;
+                                currentStatus = Status.MENU;
                                 return currentStatus;
                             }
                         }
@@ -55,7 +55,7 @@ public class ProductInsertV1 {
                     } catch (NumberFormatException e) {
                         if (command.equals(TERMINATE_COMMAND)) {
                             if (isSureExit()) {
-                                currentStatus = Status.EXIT;
+                                currentStatus = Status.MENU;
                                 return currentStatus;
                             }
                             break;
@@ -80,7 +80,7 @@ public class ProductInsertV1 {
                             currentStatus = Status.STOCK;
                         }
                     }
-                case EXIT:
+                case MENU:
                     break;
             }
 

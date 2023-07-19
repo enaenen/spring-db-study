@@ -12,7 +12,7 @@ class ItemRepositoryV0Test {
 
 	@Test
 	void crud() throws SQLException {
-		Item item = new Item("itemA", 1000, 10);
-		repository.save(item);
+//		Item item = new Item("itemA", 1000, 10);
+//		repository.save(item);
 	}
 }

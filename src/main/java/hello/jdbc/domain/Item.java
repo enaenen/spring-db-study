@@ -44,4 +44,7 @@ public class Item {
 		this.price = price;
 		this.stock = stock;
 	}
+	public String toString(){
+		return String.format("상품코드: %d,\n상품명: %s\n상품가격: %d\n상품재고: %d\n", code, name, price, stock);
+	}
 }
