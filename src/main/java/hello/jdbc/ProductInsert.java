@@ -82,7 +82,7 @@ public class ProductInsert {
                     }
 
                     currentStatus = Status.NAME;
-                    newItem = new Item(name, price, stock);
+                    newItem = Item.of(name, price, stock);
                     Item savedItem = itemService.saveItem(newItem);
                     System.out.println("saved item info : " + savedItem);
                 case EXIT:

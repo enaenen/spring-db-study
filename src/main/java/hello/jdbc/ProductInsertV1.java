@@ -1,6 +1,8 @@
 package hello.jdbc;
 
 import hello.jdbc.domain.Item;
+import hello.jdbc.exception.DomainException;
+import hello.jdbc.exception.ExceptionStatus;
 
 import static hello.jdbc.Main.*;
 
@@ -25,9 +27,6 @@ public class ProductInsertV1 {
                             currentStatus = Status.EXIT;
                             return currentStatus;
                         }
-                    }
-                    if (command == null || command.isEmpty()) {
-                        System.out.println("상품명이 입력되지 않았습니다.");
                         break;
                     }
                     name = command;
@@ -44,10 +43,6 @@ public class ProductInsertV1 {
                                 return currentStatus;
                             }
                         }
-                        System.out.println("상품 가격이 잘못 입력되었습니다.");
-                        break;
-                    }
-                    if (price < 0) {
                         System.out.println("상품 가격이 잘못 입력되었습니다.");
                         break;
                     }
@@ -68,16 +63,23 @@ public class ProductInsertV1 {
                         System.out.println("상품 재고수량이 잘못 입력되었습니다.");
                         break;
                     }
-                    if (stock < 0) {
-                        System.out.println("상품 재고수량이 잘못 입력되었습니다.");
-                        break;
+                    try {
+                        newItem = Item.of(name, price, stock);
+                        Item savedItem = itemService.saveItem(newItem);
+                        System.out.println("saved item info : " + savedItem);
+                        return Status.MENU;
+                    } catch (DomainException e) {
+                        if (e.getStatus().equals(ExceptionStatus.PRODUCT_NAME_INVALID)) {
+                            System.out.println("[상품 이름이 잘못되었습니다.]");
+                            currentStatus = Status.NAME;
+                        } else if (e.getStatus().equals(ExceptionStatus.PRODUCT_PRICE_INVALID)) {
+                            System.out.println("[상품 가격가 잘못되었습니다.]");
+                            currentStatus = Status.PRICE;
+                        } else {
+                            System.out.println("[상품 재고가 잘못되었습니다.]");
+                            currentStatus = Status.STOCK;
+                        }
                     }
-
-                    currentStatus = Status.NAME;
-                    newItem = new Item(name, price, stock);
-                    Item savedItem = itemService.saveItem(newItem);
-                    System.out.println("saved item info : " + savedItem);
-                    return Status.MENU;
                 case EXIT:
                     break;
             }

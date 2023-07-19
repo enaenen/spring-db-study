@@ -60,11 +60,8 @@ public class ItemRepositoryV0 {
 
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				Item item = new Item();
+				Item item = Item.of(rs.getString("name"), rs.getInt("price"),rs.getInt("stock"));
 				item.setCode(rs.getInt("code"));
-				item.setName(rs.getString("name"));
-				item.setPrice(rs.getInt("price"));
-				item.setStock(rs.getInt("code"));
 				return item;
 			} else {
 				throw new NoSuchElementException("Item not found itemName = " + itemName);

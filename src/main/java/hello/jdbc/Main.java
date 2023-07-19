@@ -7,9 +7,10 @@ import java.util.Scanner;
 
 public class Main {
     public static final ProductInsertV1 productInsert = new ProductInsertV1();
+    public static final ProductSearch productSearch = new ProductSearch();
+    public static final ItemService itemService = new ItemService();
     public static final Scanner scanner = new Scanner(System.in);
     public static final String TERMINATE_COMMAND = "exit";
-    public static final ItemService itemService = new ItemService();
     public static String command = "";
 
     public static void main(String[] args) {
